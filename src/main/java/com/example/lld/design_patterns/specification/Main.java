@@ -1,0 +1,31 @@
+package com.example.lld.design_patterns.specification;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        List<Product> productList = new ArrayList<>();
+
+        productList.addAll(
+                List.of(
+                        new Product("macbook", 150),
+                        new Product("mouse", 50),
+                        new Product("laptop", 500),
+                        new Product("pendrive", 99),
+                        new Product("mibook", 88)
+                )
+        );
+
+        Filter nameFilter = new ProductNameFilter("m");
+        Filter priceFilter = new ProductPriceFilter(200);
+
+        Filter nameAndPriceFilter = nameFilter.and(priceFilter).or(new ProductNameFilter("l"));
+
+        List<Product> list = productList.stream().filter(item -> nameAndPriceFilter.isSatisfiedBy(item)).toList();
+        System.out.println(list);
+
+    }
+}
