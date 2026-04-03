@@ -19,12 +19,12 @@ public class Main {
                 )
         );
 
-        Filter nameFilter = new ProductNameFilter("m");
-        Filter priceFilter = new ProductPriceFilter(200);
+        Filter<Product> nameFilter = new ProductNameFilter("m");
+        Filter<Product> priceFilter = new ProductPriceFilter(200);
 
-        Filter nameAndPriceFilter = nameFilter.and(priceFilter).or(new ProductNameFilter("l"));
+        Filter<Product> nameAndPriceFilter = nameFilter.and(priceFilter).or(new ProductNameFilter("l"));
 
-        List<Product> list = productList.stream().filter(item -> nameAndPriceFilter.isSatisfiedBy(item)).toList();
+        List<Product> list = productList.stream().filter(nameAndPriceFilter::isSatisfiedBy).toList();
         System.out.println(list);
 
     }
